@@ -3,6 +3,7 @@ package com.onclass.mstecnologia.infrastructure.entrypoints.rest;
 import com.onclass.mstecnologia.application.api.TechnologyDTO;
 import com.onclass.mstecnologia.application.usecase.SaveTechnologyUseCase;
 import com.onclass.mstecnologia.infrastructure.adapters.db.mappers.TechnologyMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,7 +19,7 @@ public class TechnologyController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<TechnologyDTO> createTechnology(@RequestBody TechnologyDTO dto) {
+    public Mono<TechnologyDTO> createTechnology(@Valid @RequestBody TechnologyDTO dto) {
         return saveTechnologyUseCase.execute(TechnologyMapper.toDomain(dto))
                 .map(TechnologyMapper::toDTO);
     }
