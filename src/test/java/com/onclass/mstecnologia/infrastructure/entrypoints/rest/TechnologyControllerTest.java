@@ -1,7 +1,7 @@
 package com.onclass.mstecnologia.infrastructure.entrypoints.rest;
 
 import com.onclass.mstecnologia.application.api.TechnologyDTO;
-import com.onclass.mstecnologia.application.usecase.SaveTechnologyUseCase;
+import com.onclass.mstecnologia.application.usecase.impl.SaveTechnologyUseCaseImpl;
 import com.onclass.mstecnologia.domain.model.Technology;
 import com.onclass.mstecnologia.infrastructure.entrypoints.rest.handler.GlobalExceptionHandler;
 import org.junit.jupiter.api.Test;
@@ -26,13 +26,13 @@ class TechnologyControllerTest {
     private WebTestClient webTestClient;
 
     @Autowired
-    private SaveTechnologyUseCase saveTechnologyUseCase;
+    private SaveTechnologyUseCaseImpl saveTechnologyUseCaseImpl;
 
     @TestConfiguration
     static class MockedBeansConfig {
         @Bean
-        public SaveTechnologyUseCase saveTechnologyUseCase() {
-            return Mockito.mock(SaveTechnologyUseCase.class);
+        public SaveTechnologyUseCaseImpl saveTechnologyUseCase() {
+            return Mockito.mock(SaveTechnologyUseCaseImpl.class);
         }
     }
 
@@ -41,7 +41,7 @@ class TechnologyControllerTest {
         var dto = new TechnologyDTO("4", "Java", "Lenguaje backend");
         var expected = new Technology("1", "Java", "Lenguaje backend");
 
-        when(saveTechnologyUseCase.execute(any())).thenReturn(Mono.just(expected));
+        when(saveTechnologyUseCaseImpl.execute(any())).thenReturn(Mono.just(expected));
 
         webTestClient.post()
                 .uri("/technologies")
