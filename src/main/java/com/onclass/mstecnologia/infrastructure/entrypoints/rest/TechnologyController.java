@@ -1,6 +1,8 @@
 package com.onclass.mstecnologia.infrastructure.entrypoints.rest;
 
 import com.onclass.mstecnologia.application.api.TechnologyDTO;
+import com.onclass.mstecnologia.application.api.TechnologyInfo;
+import com.onclass.mstecnologia.application.usecase.FindTechnologiesByIdUseCase;
 import com.onclass.mstecnologia.application.usecase.impl.ListTechnologiesUseCaseImpl;
 import com.onclass.mstecnologia.application.usecase.impl.SaveTechnologyUseCaseImpl;
 import com.onclass.mstecnologia.infrastructure.adapters.db.mappers.TechnologyMapper;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/technologies")
 @RequiredArgsConstructor
@@ -19,6 +23,7 @@ public class TechnologyController {
 
     private final SaveTechnologyUseCaseImpl saveTechnologyUseCaseImpl;
     private final ListTechnologiesUseCaseImpl listTechnologiesUseCase;
+    private final FindTechnologiesByIdUseCase findTechnologiesByIdUseCase;
 
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -38,5 +43,11 @@ public class TechnologyController {
         return listTechnologiesUseCase.getAllTechnologies(page, size, sortBy, ascending)
                 .map(TechnologyMapper::toDTO);
     }
+
+    @PostMapping("/by-ids")
+    public Flux<TechnologyInfo> findByIds(@RequestBody List<String> ids) {
+        return findTechnologiesByIdUseCase.execute(ids);
+    }
+
 
 }
