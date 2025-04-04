@@ -2,7 +2,6 @@ package com.onclass.mstecnologia.application.usecase.impl;
 
 import com.onclass.mstecnologia.application.api.TechnologyInfo;
 import com.onclass.mstecnologia.application.usecase.FindTechnologiesByIdUseCase;
-import com.onclass.mstecnologia.domain.model.Technology;
 import com.onclass.mstecnologia.domain.repository.TechnologyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
