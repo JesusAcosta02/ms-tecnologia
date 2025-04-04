@@ -25,4 +25,12 @@ public class TechnologyEntityMapper {
                 row.get("description", String.class)
         );
     }
+
+    public static TechnologyEntity fromRowWithoutDescription(Row row) {
+        return new TechnologyEntity(
+                row.get("id", String.class),
+                row.get("name", String.class),
+                null
+        );
+    }
 }
